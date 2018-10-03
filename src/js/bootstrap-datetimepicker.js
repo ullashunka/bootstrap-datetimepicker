@@ -1,4 +1,4 @@
-/*! version : 4.17.47
+/*! version : 4.17.45
  =========================================================
  bootstrap-datetimejs
  https://github.com/Eonasdan/bootstrap-datetimepicker
@@ -1428,7 +1428,10 @@
                 if (!unset) {
                     setValue(date);
                 }
-            };
+            },
+            //variables for setInlineView
+            setInlineViewCache,
+            elems;
 
         /********************************************************************************
          *
@@ -1457,17 +1460,35 @@
         picker.disable = function () {
             ///<summary>Disables the input element, the component is attached to, by adding a disabled="true" attribute to it.
             ///If the widget was visible before that call it is hidden. Possibly emits dp.hide</summary>
-            hide();
-            if (component && component.hasClass('btn')) {
-                component.addClass('disabled');
+           
+            if (options.inline) {
+            	widget.find('td').addClass('disabledForce');
+                widget.find('th').addClass('disabledForce');
+                widget.find('span').addClass('disabledForce');
+               widget.off('click', '[data-action]');
+               widget.off('mousedown', false);
+            } else {
+               hide();
+               if (component && component.hasClass('btn')) {
+                  component.addClass('disabled');
+               }
+               input.prop('disabled', true);
             }
-            input.prop('disabled', true);
             return picker;
         };
 
         picker.enable = function () {
             ///<summary>Enables the input element, the component is attached to, by removing disabled attribute from it.</summary>
-            if (component && component.hasClass('btn')) {
+        	 if (options.inline) {
+                 widget.find('td').removeClass('disabledForce');
+                 widget.find('th').removeClass('disabledForce');
+                 widget.find('span').removeClass('disabledForce');
+                 widget.on('click', '[data-action]', doAction); // this handles clicks on the widget
+                 widget.on('mousedown', false);
+                 return;
+              }
+        	
+        	if (component && component.hasClass('btn')) {
                 component.removeClass('disabled');
             }
             input.prop('disabled', false);
@@ -2327,6 +2348,29 @@
             return picker;
         };
 
+        /**
+         * Sets the view in inline mode
+         * @param {Takes string, 'datepicker', 'timepicker'} newDate
+         * @returns {picker instance}
+         */
+        picker.setInlineView = function (view) {
+            if (picker.options().inline) {
+                var cache = picker.setInlineView.cache;
+                if (view === 'datepicker') {
+                    //show the date picker
+                    cache.firstLi.collapse('show');
+                    cache.lastLi.collapse('hide');
+                    cache.span.removeClass('glyphicon-calendar').addClass('glyphicon-time');
+                } else if (view === 'timepicker') {
+                    //show the time picker
+                    cache.firstLi.collapse('hide');
+                    cache.lastLi.collapse('show');
+                    cache.span.removeClass('glyphicon-time').addClass('glyphicon-calendar');
+                }
+            }
+            return picker;
+        };
+
         // initializing element and component attributes
         if (element.is('input')) {
             input = element;
@@ -2375,6 +2419,13 @@
         }
         if (options.inline) {
             show();
+            elems = $('li', widget);
+            setInlineViewCache = {
+                firstLi : elems.first(),
+                span: elems.first().next().find('span'),
+                lastLi : elems.last()
+            };
+            picker.setInlineView.cache = setInlineViewCache;
         }
         return picker;
     };
