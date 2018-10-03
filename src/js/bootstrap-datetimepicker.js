@@ -1460,17 +1460,35 @@
         picker.disable = function () {
             ///<summary>Disables the input element, the component is attached to, by adding a disabled="true" attribute to it.
             ///If the widget was visible before that call it is hidden. Possibly emits dp.hide</summary>
-            hide();
-            if (component && component.hasClass('btn')) {
-                component.addClass('disabled');
+           
+            if (options.inline) {
+            	widget.find('td').addClass('disabledForce');
+                widget.find('th').addClass('disabledForce');
+                widget.find('span').addClass('disabledForce');
+               widget.off('click', '[data-action]');
+               widget.off('mousedown', false);
+            } else {
+               hide();
+               if (component && component.hasClass('btn')) {
+                  component.addClass('disabled');
+               }
+               input.prop('disabled', true);
             }
-            input.prop('disabled', true);
             return picker;
         };
 
         picker.enable = function () {
             ///<summary>Enables the input element, the component is attached to, by removing disabled attribute from it.</summary>
-            if (component && component.hasClass('btn')) {
+        	 if (options.inline) {
+                 widget.find('td').removeClass('disabledForce');
+                 widget.find('th').removeClass('disabledForce');
+                 widget.find('span').removeClass('disabledForce');
+                 widget.on('click', '[data-action]', doAction); // this handles clicks on the widget
+                 widget.on('mousedown', false);
+                 return;
+              }
+        	
+        	if (component && component.hasClass('btn')) {
                 component.removeClass('disabled');
             }
             input.prop('disabled', false);
