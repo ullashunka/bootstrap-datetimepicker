@@ -211,6 +211,13 @@ $bs-datetimepicker-text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25) !default;
                 color: $bs-datetimepicker-disabled-color;
                 cursor: not-allowed;
             }
+            
+            &.disabledForce,
+            &.disabledForce:hover {
+                background: none;
+                color: $bs-datetimepicker-disabled-color;
+                cursor: not-allowed;
+            }
 
             &.prev::after {
                 @extend .sr-only;
@@ -295,6 +302,13 @@ $bs-datetimepicker-text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25) !default;
                 color: $bs-datetimepicker-disabled-color;
                 cursor: not-allowed;
             }
+            
+            &.disabledForce,
+            &.disabledForce:hover {
+                background: none;
+                color: $bs-datetimepicker-disabled-color;
+                cursor: not-allowed;
+            }
 
             span {
                 display: inline-block;
@@ -321,6 +335,13 @@ $bs-datetimepicker-text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25) !default;
 
                 &.disabled,
                 &.disabled:hover {
+                    background: none;
+                    color: $bs-datetimepicker-disabled-color;
+                    cursor: not-allowed;
+                }
+                
+                &.disabledForce,
+                &.disabledForce:hover {
                     background: none;
                     color: $bs-datetimepicker-disabled-color;
                     cursor: not-allowed;
