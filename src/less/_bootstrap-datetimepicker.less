@@ -1,6 +1,6 @@
 /*!
  * Datetimepicker for Bootstrap 3
- * version : 4.17.47
+ * version : 4.17.45
  * https://github.com/Eonasdan/bootstrap-datetimepicker/
  */
 @bs-datetimepicker-timepicker-font-size: 1.2em;
@@ -213,6 +213,13 @@
                 cursor: not-allowed;
             }
 
+            &.disabledForce,
+            &.disabledForce:hover {
+                background: none;
+                color: @bs-datetimepicker-disabled-color;
+                cursor: not-allowed;
+            }
+
             &.prev::after {
                 .sr-only();
                 content: "Previous Month";
@@ -297,6 +304,13 @@
                 cursor: not-allowed;
             }
 
+            &.disabledForce,
+            &.disabledForce:hover {
+                background: none;
+                color: @bs-datetimepicker-disabled-color;
+                cursor: not-allowed;
+            }
+
             span {
                 display: inline-block;
                 width: 54px;
@@ -322,6 +336,13 @@
 
                 &.disabled,
                 &.disabled:hover {
+                    background: none;
+                    color: @bs-datetimepicker-disabled-color;
+                    cursor: not-allowed;
+                }
+
+                &.disabledForce,
+                &.disabledForce:hover {
                     background: none;
                     color: @bs-datetimepicker-disabled-color;
                     cursor: not-allowed;
